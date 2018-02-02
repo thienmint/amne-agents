@@ -21,7 +21,7 @@ export default class WebMap extends Component {
     return (
       <div className="webmap">
         <GoogleMap
-          // apiKey={YOUR_GOOGLE_MAP_API_KEY} // set if you need stats etc ...
+          apiKey='AIzaSyALINww1dMSk0T_EXLNaJ3MPLDdEV02H-g'
           center={this.props.center}
           zoom={this.props.zoom}>
           <Room lat={30.239808} lng={-97.727961} color="secondary"/>
