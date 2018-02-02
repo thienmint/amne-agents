@@ -56,7 +56,7 @@ export default class InputForm extends Component {
       // TODO: Add submission state (empty, failed, waiting, success)
       stateCopy.waitingSubmit = false;
       object.setState(stateCopy);
-
+      object.props.onSubmit(stateCopy.submitLocations);
     })
 
   }

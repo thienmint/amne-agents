@@ -18,8 +18,8 @@ export default class Home extends Component {
     this.handleSubmission = this.handleSubmission.bind(this);
   }
 
-  handleSubmission (submittedLocations) {
-    console.log(submittedLocations)
+  handleSubmission (submitLocations) {
+    console.log(submitLocations)
   }
 
   render() {
