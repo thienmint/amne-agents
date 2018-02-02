@@ -30,6 +30,7 @@ export default class InputForm extends Component {
 
   handleSubmit() {
     this.setState({waitingSubmit: true});
+    const object = this;
 
     let stateCopy = Object.assign({}, this.state);
     stateCopy.submitLocations = [];
@@ -52,7 +53,9 @@ export default class InputForm extends Component {
     }, function (err, result) {
       if (err) {console.log(err); return;}
 
-      console.log("Final result", result)
+      // TODO: Add submission state (empty, failed, waiting, success)
+      stateCopy.waitingSubmit = false;
+      object.setState(stateCopy)
     })
 
   }
