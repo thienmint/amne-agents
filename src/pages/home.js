@@ -9,7 +9,7 @@ export default class Home extends Component {
     return (
       <div>
         <NavBar/>
-        Hello from Home!
+        {/*Hello from Home!*/}
       </div>
     )
   }
