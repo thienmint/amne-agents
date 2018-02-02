@@ -7,24 +7,32 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 export default class InputForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { address: 'Austin, TX' };
-    this.onChange = (address) => this.setState({ address })
+    this.state = {
+      address: {
+        1: 'Austin, TX',
+        2: 'Austin, TX'
+      }
+    };
+    this.onChange1 = (address) => this.handleChange(1, address);
+    this.onChange2 = (address) => this.handleChange(2, address);
+    this.handleChange = this.handleChange.bind(this);
   }
-
+  handleChange (addressNum, newAddress) {
+    console.log(addressNum);
+    let stateCopy = Object.assign({}, this.state);
+    stateCopy.address[addressNum] = newAddress;
+    this.setState(stateCopy)
+  }
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    geocodeByAddress(this.state.address)
+    geocodeByAddress(this.state.address[1])
       .then(results => getLatLng(results[0]))
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error))
   };
 
   render() {
-    const inputProps = {
-      value: this.state.address,
-      onChange: this.onChange,
-    };
     // TODO update how suggestions are listed
     const renderSuggestion = ({ suggestion }) => (<div><i className="fa fa-map-marker"/>{suggestion}</div>);
     // TODO: Update this
@@ -61,14 +69,16 @@ export default class InputForm extends Component {
       <div>
         <InputLabel>Address #1</InputLabel>
         <PlacesAutocomplete
-          inputProps={inputProps}
+          name="firstAddress"
+          inputProps={{value: this.state.address[1], onChange: this.onChange1}}
           renderSuggestion={renderSuggestion}
           styles={myStyles}
         />
 
         <InputLabel>Address #2</InputLabel>
         <PlacesAutocomplete
-          inputProps={{value: 'Austin, TX', onChange: () => console.log('Change')}}
+          name="secondAddress"
+          inputProps={{value: this.state.address[2], onChange: this.onChange2}}
           renderSuggestion={renderSuggestion}
           styles={myStyles}
         />

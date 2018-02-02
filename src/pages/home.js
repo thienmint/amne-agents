@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /* Front-end imports */
-import {Grid, Typography} from 'material-ui';
+import {Grid} from 'material-ui';
 
 /* Components */
 import NavBar from '../components/navbar';
