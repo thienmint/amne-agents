@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {InputLabel, Button} from 'material-ui'
+import {InputLabel, Button, CircularProgress} from 'material-ui'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 
 
@@ -11,18 +11,46 @@ export default class InputForm extends Component {
       address: {
         1: 'Austin, TX',
         2: 'Austin, TX'
-      }
+      },
+      waitingSubmit: false
     };
     this.onChange1 = (address) => this.handleChange(1, address);
     this.onChange2 = (address) => this.handleChange(2, address);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
   handleChange (addressNum, newAddress) {
-    console.log(addressNum);
     let stateCopy = Object.assign({}, this.state);
     stateCopy.address[addressNum] = newAddress;
     this.setState(stateCopy)
   }
+
+  handleSubmit() {
+    this.setState({waitingSubmit: true});
+
+    let stateCopy = Object.assign({}, this.state);
+    geocodeByAddress(stateCopy.address[1])
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log(latLng);
+        stateCopy.waitingSubmit = false;
+        this.setState(stateCopy)
+      })
+      .catch(error => {
+        console.log(error);
+        stateCopy.waitingSubmit = false;
+        this.setState(stateCopy)
+      })
+  }
+
+  handleReset() {
+    let stateCopy = Object.assign({}, this.state);
+    stateCopy.address[1] = 'Austin, TX';
+    stateCopy.address[2] = 'Austin, TX';
+    this.setState(stateCopy)
+  }
+
   handleFormSubmit = (event) => {
     event.preventDefault();
 
@@ -82,11 +110,13 @@ export default class InputForm extends Component {
           renderSuggestion={renderSuggestion}
           styles={myStyles}
         />
+
         <Button
           color = 'primary'
           raised
           size = 'small'
-          onClick={this.handleFormSubmit}
+          onClick={this.handleSubmit}
+          disabled={this.state.waitingSubmit}
         >
           Submit
         </Button>
@@ -94,9 +124,13 @@ export default class InputForm extends Component {
           color = 'secondary'
           raised
           size = 'small'
+          onClick={this.handleReset}
+          disable={this.state.waitingSubmit}
         >
           Reset
         </Button>
+
+        {this.state.waitingSubmit && <CircularProgress size={25}/>}
 
       </div>
     )
