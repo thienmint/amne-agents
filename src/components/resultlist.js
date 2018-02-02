@@ -17,24 +17,24 @@ export default class ResultList extends Component {
             <Subheader component="div">Agencies near by you</Subheader>
           </GridListTile>
           <GridListTile>
-            <img src="/realty_austin.jpg" alt="Alternative text" width="180px"/>
+            <img src="/realty_austin.jpg" alt="Alternative text" />
             <GridListTileBar
               title="Bar title"
               subtitle={<span>by: "Author"</span>}
               actionIcon={
-                <IconButton>
+                <IconButton color='primary'>
                   <InfoIcon />
                 </IconButton>
               }
             />
           </GridListTile>
           <GridListTile>
-            <img src="/realty_austin.jpg" alt="Alternative text" width="180px"/>
+            <img src="/realty_austin.jpg" alt="Alternative text"/>
             <GridListTileBar
               title="Bar title"
               subtitle={<span>by: "Author"</span>}
               actionIcon={
-                <IconButton>
+                <IconButton color='primary'>
                   <InfoIcon />
                 </IconButton>
               }
