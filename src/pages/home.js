@@ -17,10 +17,17 @@ export default class Home extends Component {
       <div>
         <Grid container>
           <Grid item xs={12} sm={4} md={3}>
-            <NavBar/>
-            <Input/>
-            <ResultList/>
-
+            <Grid container>
+              <Grid item xs={12}>
+                <NavBar/>
+              </Grid>
+              <Grid item xs={12}>
+                <Input/>
+              </Grid>
+              <Grid item xs={12}>
+                <ResultList/>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={8} md={9}>
             <WebMap/>
