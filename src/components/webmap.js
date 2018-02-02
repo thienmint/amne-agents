@@ -17,7 +17,6 @@ export default class WebMap extends Component {
   }
 
   render() {
-    //TODO set api key in process environment
     return (
       <div className="webmap">
         <GoogleMap
