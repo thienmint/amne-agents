@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+/* Front-end imports */
+import {Grid, Typography} from 'material-ui';
+
+/* Components */
 import NavBar from '../components/navbar';
 import Input from '../components/input'
 import ResultList from '../components/resultlist'
@@ -11,10 +15,19 @@ export default class Home extends Component {
 
     return (
       <div>
-        <NavBar/>
-        <Input/>
-        <ResultList/>
-        <WebMap/>
+        <Grid container>
+          <Grid item xs={12}>
+          </Grid>
+          <Grid item xs={3}>
+            <NavBar/>
+            <Input/>
+            <ResultList/>
+
+          </Grid>
+          <Grid item xs={9}>
+            <WebMap/>
+          </Grid>
+        </Grid>
       </div>
     )
   }
