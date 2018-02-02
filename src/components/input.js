@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {InputLabel, Button, CircularProgress} from 'material-ui'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import async from 'async'
 
 
 
@@ -12,6 +13,7 @@ export default class InputForm extends Component {
         1: 'Austin, TX',
         2: 'Austin, TX'
       },
+      submitLocations: [],
       waitingSubmit: false
     };
     this.onChange1 = (address) => this.handleChange(1, address);
@@ -30,18 +32,29 @@ export default class InputForm extends Component {
     this.setState({waitingSubmit: true});
 
     let stateCopy = Object.assign({}, this.state);
-    geocodeByAddress(stateCopy.address[1])
-      .then(results => getLatLng(results[0]))
-      .then(latLng => {
-        console.log(latLng);
-        stateCopy.waitingSubmit = false;
-        this.setState(stateCopy)
-      })
-      .catch(error => {
-        console.log(error);
-        stateCopy.waitingSubmit = false;
-        this.setState(stateCopy)
-      })
+    stateCopy.submitLocations = [];
+
+    let geoCode1 = geocodeByAddress(stateCopy.address[1]);
+    let geoCode2 =geocodeByAddress(stateCopy.address[2]);
+
+    async.every([geoCode1, geoCode2], function (geoCodePromise, callback) {
+      geoCodePromise
+        .then(results => getLatLng(results[0]))
+        .then(latLng => {
+          stateCopy.submitLocations.push(latLng);
+          console.log("Got a result", latLng);
+          callback(null, true)
+        })
+        .catch(error => {
+          console.log("Error getting long/lat", error);
+          callback(error, false)
+        });
+    }, function (err, result) {
+      if (err) {console.log(err); return;}
+
+      console.log("Final result", result)
+    })
+
   }
 
   handleReset() {
