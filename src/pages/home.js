@@ -11,6 +11,17 @@ import WebMap from '../components/webmap'
 
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+    this.handleSubmission = this.handleSubmission.bind(this);
+  }
+
+  handleSubmission (submittedLocations) {
+    console.log(submittedLocations)
+  }
+
   render() {
 
     return (
@@ -22,7 +33,7 @@ export default class Home extends Component {
                 <NavBar/>
               </Grid>
               <Grid item xs={12}>
-                <Input/>
+                <Input onSubmit={this.handleSubmission}/>
               </Grid>
               <Grid item xs={12}>
                 <ResultList/>

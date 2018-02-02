@@ -55,7 +55,8 @@ export default class InputForm extends Component {
 
       // TODO: Add submission state (empty, failed, waiting, success)
       stateCopy.waitingSubmit = false;
-      object.setState(stateCopy)
+      object.setState(stateCopy);
+
     })
 
   }
@@ -66,15 +67,6 @@ export default class InputForm extends Component {
     stateCopy.address[2] = 'Austin, TX';
     this.setState(stateCopy)
   }
-
-  handleFormSubmit = (event) => {
-    event.preventDefault();
-
-    geocodeByAddress(this.state.address[1])
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error))
-  };
 
   render() {
     // TODO update how suggestions are listed
