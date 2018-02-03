@@ -7,7 +7,6 @@ import async from 'async'
 
 
 export default class InputForm extends Component {
-  // TODO add addres validation by only allowing them to pick from the list
   constructor(props) {
     super(props);
     this.state = {
@@ -173,7 +172,6 @@ export default class InputForm extends Component {
         backgroundColor: '#fafafa'
       },
     };
-    // TODO: update the handlers
     return (
       <div>
         <InputLabel>Address #1</InputLabel>

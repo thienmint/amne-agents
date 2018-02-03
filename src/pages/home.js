@@ -16,7 +16,12 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapCoordinates: [],
+      mapCoordinates: {
+        'search': [],
+        'firstAddress': {},
+        'secondAddress': {},
+        'midpoint': {}
+      }
     };
     this.yelpKey = '3tQmAEwuO1WpacLY5V8IOLH3289iryiuedM3nrX5PF6fZr3CLUyMq4EQZcjSWqZ-moDczoazxwpEJClCQyT45i887MIXJrl6fUioL_TdHLkNd5l7GWEZWA1f9tR0WnYx'
     this.handleSubmission = this.handleSubmission.bind(this);
@@ -29,9 +34,15 @@ export default class Home extends Component {
    * Build up unique dictionary
    */
   handleSubmission (submitLocations) {
+    let stateCopy = Object.assign({}, this.state);
+    let object = this;
     console.log("Got submitted locations", submitLocations);
+    stateCopy.mapCoordinates['firstAddress'] = submitLocations[1];
+    stateCopy.mapCoordinates['secondAddress'] = submitLocations[2];
+
     let midpoint = Home.findMidPoint(submitLocations[1], submitLocations[2]);
     console.log("Mid point = ", midpoint);
+    stateCopy.mapCoordinates['midpoint'] = midpoint;
 
     // Invoke API
     let endpoint = 'https://api.yelp.com/v3/businesses/search?';
@@ -53,15 +64,14 @@ export default class Home extends Component {
     axios.get(proxy+searchQuery, config).then((response) => {
       console.log("GOT DATA!");
       let data = response.data.businesses;
-      // for(let i = 0; i < data.length; ++i) {
-      //   data[i]["liked"] = false
-      // }
-      console.log(data)
-      // let stateCopy = Object.assign([], this.state);
-      // stateCopy.restaurants = data;
-      // stateCopy.canPick = true;
-      // console.log("CALLBACK", stateCopy.restaurants.length);
-      // this.setState(stateCopy);
+      let temp = [];
+      for(let i = 0; i < data.length; ++i) {
+        temp.push(data[i]["coordinates"])
+      }
+      stateCopy.mapCoordinates.search = temp;
+      console.log(data);
+      object.setState(stateCopy);
+
     },(error) => {
       console.log("CALLBACK ERROR");
       console.log(error)
@@ -94,7 +104,7 @@ export default class Home extends Component {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={6} md={8} >
-            <WebMap/>
+            <WebMap locations={this.state.mapCoordinates}/>
           </Grid>
         </Grid>
       </div>
