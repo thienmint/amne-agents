@@ -2,7 +2,7 @@
  * Base Google Map example
  */
 import React, {Component} from 'react';
-
+import Marker from './marker';
 import {Room} from 'material-ui-icons'
 import GoogleMap from 'google-map-react';
 
@@ -12,7 +12,7 @@ export default class WebMap extends Component {
 
     this.state = {
       center: [30.2396338, -97.728029],
-      zoom: 10
+      zoom: 12,
     };
 
     this.generateMarkers = this.generateMarkers.bind(this);
@@ -25,18 +25,30 @@ export default class WebMap extends Component {
     let midpoint = this.props.locations['midpoint'];
 
     let elems = [];
+    // if (Object.keys(midpoint).length > 0)
+    //   elems.push(<Room lat={midpoint.lat} lng={midpoint.lng} color="action"/>);
+    //
+    // if (Object.keys(firstAddress).length > 0)
+    //   elems.push(<Room lat={firstAddress.lat} lng={firstAddress.lng} color="primary"/>);
+    //
+    // if (Object.keys(secondAddress).length > 0)
+    //   elems.push(<Room lat={secondAddress.lat} lng={secondAddress.lng} color="primary"/>);
+    //
+    // search.map((coor, index) => {
+    //   elems.push(<Room key={index} lat={coor.latitude} lng={coor.longitude} color="secondary"/>)
+    // });
+    //
     if (Object.keys(midpoint).length > 0)
-      elems.push(<Room lat={midpoint.lat} lng={midpoint.lng} color="action"/>);
+          elems.push(<Marker key={'midpoint'} lat={midpoint.lat} lng={midpoint.lng} defaultColor={"action"}/>);
 
     if (Object.keys(firstAddress).length > 0)
-      elems.push(<Room lat={firstAddress.lat} lng={firstAddress.lng} color="primary"/>);
+      elems.push(<Marker key={'firstaddress'} lat={firstAddress.lat} lng={firstAddress.lng} defaultColor={"primary"}/>);
 
     if (Object.keys(secondAddress).length > 0)
-      elems.push(<Room lat={secondAddress.lat} lng={secondAddress.lng} color="primary"/>);
+      elems.push(<Marker key={'secondaddress'} lat={secondAddress.lat} lng={secondAddress.lng} defaultColor={"primary"}/>);
 
-    console.log(search);
     search.map((coor, index) => {
-      elems.push(<Room key={index} lat={coor.latitude} lng={coor.longitude} color="secondary"/>)
+      elems.push(<Marker key={index} lat={coor.latitude} lng={coor.longitude} defaultColor={"secondary"}/>)
     });
 
     return elems
@@ -56,7 +68,9 @@ export default class WebMap extends Component {
         <GoogleMap
           apiKey='AIzaSyALINww1dMSk0T_EXLNaJ3MPLDdEV02H-g'
           center={WebMap.getCenter(this.props.locations['midpoint'])}
-          zoom={10}>
+          zoom={12}
+          hoverDistance={20}
+        >
           {this.generateMarkers()}
         </GoogleMap>
       </div>
