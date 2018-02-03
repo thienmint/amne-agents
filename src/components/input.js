@@ -13,12 +13,12 @@ export default class InputForm extends Component {
     this.state = {
       addressInput: {
         1: {
-          'address': 'Austin, TX',
+          'address': '1330 Shore District Drive, Austin, TX',
           'validated': true,
           'inputHelpText': ''
         },
         2: {
-          'address': 'Dallas, TX',
+          'address': '11441 N Interstate 35 Frontage Rd, Austin, TX 78753',
           'validated': true,
           'inputHelpText': ''
         },
