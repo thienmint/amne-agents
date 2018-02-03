@@ -25,19 +25,6 @@ export default class WebMap extends Component {
     let midpoint = this.props.locations['midpoint'];
 
     let elems = [];
-    // if (Object.keys(midpoint).length > 0)
-    //   elems.push(<Room lat={midpoint.lat} lng={midpoint.lng} color="action"/>);
-    //
-    // if (Object.keys(firstAddress).length > 0)
-    //   elems.push(<Room lat={firstAddress.lat} lng={firstAddress.lng} color="primary"/>);
-    //
-    // if (Object.keys(secondAddress).length > 0)
-    //   elems.push(<Room lat={secondAddress.lat} lng={secondAddress.lng} color="primary"/>);
-    //
-    // search.map((coor, index) => {
-    //   elems.push(<Room key={index} lat={coor.latitude} lng={coor.longitude} color="secondary"/>)
-    // });
-    //
     if (Object.keys(midpoint).length > 0)
           elems.push(<Marker key={'midpoint'} lat={midpoint.lat} lng={midpoint.lng} defaultColor={"action"}/>);
 
@@ -57,9 +44,9 @@ export default class WebMap extends Component {
   static getCenter(midpoint) {
     // There is a midpoint
     if (Object.keys(midpoint).length > 0)
-      return [midpoint.lat, midpoint.lng]
+      return [midpoint.lat, midpoint.lng];
     else
-      return [30.2396338, -97.728029]
+      return [30.2396338, -97.728029];
   }
 
   render() {
