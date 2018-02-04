@@ -10,7 +10,7 @@ export default class NavBar extends Component {
       <div>
         <AppBar position="static" color="default">
           <Typography type="title" color="inherit">
-            Navigation to be completed
+            Please enter 2 valid addresses below to search!
           </Typography>
         </AppBar>
       </div>
