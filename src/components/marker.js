@@ -50,13 +50,13 @@ export default class Marker extends Component {
             <Card>
               <CardContent>
                 <Typography type="title" component="h2">
-                  Company name
+                  {this.props.cardInfo.title}
                 </Typography>
                 <Typography type="body1">
-                  Distance from #1: 15 miles
+                  {this.props.cardInfo.body1}
                 </Typography>
                 <Typography type="body1">
-                  Distance from #2: 25 miles
+                  {this.props.cardInfo.body2}
                 </Typography>
               </CardContent>
             </Card>

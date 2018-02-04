@@ -37,7 +37,6 @@ class WebMap extends Component {
   };
 
   generateMarkers() {
-    let search = this.props.locations['search'];
     let firstAddress = this.props.locations['firstAddress'];
     let secondAddress = this.props.locations['secondAddress'];
     let midpoint = this.props.locations['midpoint'];
@@ -45,19 +44,40 @@ class WebMap extends Component {
     let elems = [];
     if (Object.keys(midpoint).length > 0)
           elems.push(<Marker key={'midpoint'} lat={midpoint.lat} lng={midpoint.lng}
-                             defaultColor={"action"} hover={this.props.hoverKey === 'midpoint'}/>);
+                             defaultColor={"action"} hover={this.props.hoverKey === 'midpoint'}
+                             cardInfo={{
+                               'title': 'Mid point between addresses',
+                               'body1': '',
+                               'body2': ''
+                             }}
+          />);
 
     if (Object.keys(firstAddress).length > 0)
       elems.push(<Marker key={'firstaddress'} lat={firstAddress.lat} lng={firstAddress.lng}
-                         defaultColor={"primary"} hover={this.props.hoverKey === 'firstaddress'}/>);
+                         defaultColor={"primary"} hover={this.props.hoverKey === 'never'}
+                         cardInfo={{
+                           'title': 'Address #1',
+                           'body1': '',
+                           'body2': ''
+                         }}/>);
 
     if (Object.keys(secondAddress).length > 0)
       elems.push(<Marker key={'secondaddress'} lat={secondAddress.lat} lng={secondAddress.lng}
-                         defaultColor={"primary"} hover={this.props.hoverKey === 'secondaddress'}/>);
+                         defaultColor={"primary"} hover={this.props.hoverKey === 'never'}
+                         cardInfo={{
+                           'title': 'Address #2',
+                           'body1': '',
+                           'body2': ''
+                         }}/>);
 
-    search.map((coor, index) => {
-      elems.push(<Marker key={index} lat={coor.latitude} lng={coor.longitude}
-                         defaultColor={"secondary"} hover={this.props.hoverKey === index}/>)
+    this.props.businesses.map((business, index) => {
+      elems.push(<Marker key={index} lat={business.coordinates.latitude} lng={business.coordinates.longitude}
+                         defaultColor={"secondary"} hover={this.props.hoverKey === index}
+                         cardInfo={{
+                           'title': business.name,
+                           'body1': 'Distance from #1: ' + business.distanceText[0],
+                           'body2': 'Distance from #2: ' + business.distanceText[1],
+                         }}/>)
     });
 
     return elems

@@ -155,7 +155,9 @@ export default class Home extends Component {
           </Grid>
           <Grid item xs={12} sm={6} md={8} >
             <WebMap locations={this.state.mapCoordinates}
-                    center={Home.getCenter(this.state.mapCoordinates.midpoint)} zoom={12}/>
+                    center={Home.getCenter(this.state.mapCoordinates.midpoint)} zoom={12}
+                    businesses={this.state.businesses}
+            />
           </Grid>
         </Grid>
       </div>
