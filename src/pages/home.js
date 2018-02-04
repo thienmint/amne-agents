@@ -22,7 +22,7 @@ export default class Home extends Component {
         'secondAddress': {},
         'midpoint': {}
       },
-      businesses: []
+      businesses: [],
     };
     this.yelpKey = '3tQmAEwuO1WpacLY5V8IOLH3289iryiuedM3nrX5PF6fZr3CLUyMq4EQZcjSWqZ-moDczoazxwpEJClCQyT45i887MIXJrl6fUioL_TdHLkNd5l7GWEZWA1f9tR0WnYx'
     this.handleSubmission = this.handleSubmission.bind(this);
@@ -68,14 +68,56 @@ export default class Home extends Component {
       }
       stateCopy.mapCoordinates.search = temp;
       stateCopy.businesses = data;
-      console.log(data);
-      object.setState(stateCopy);
+      Home.distanceMatrix(stateCopy, object);
+      // object.setState(stateCopy);
 
     },(error) => {
       console.log("CALLBACK ERROR");
       console.log(error);
       object.setState(stateCopy);
     });
+  }
+
+
+  static distanceMatrix(stateCopy, object) {
+    let proxy = "https://cors.now.sh/";
+    let endpoint = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial';
+    let apiKey = 'AIzaSyALINww1dMSk0T_EXLNaJ3MPLDdEV02H-g';
+    let origin1 = stateCopy.mapCoordinates.firstAddress.lat + ',' + stateCopy.mapCoordinates.firstAddress.lng;
+    let origin2 = stateCopy.mapCoordinates.secondAddress.lat + ',' + stateCopy.mapCoordinates.secondAddress.lng;
+    let destinations = [];
+
+    for(let i = 0; i < stateCopy.businesses.length; ++i) {
+      let coor = stateCopy.businesses[i]['coordinates'];
+      destinations.push(coor.latitude + ',' + coor.longitude);
+    }
+    let query =
+      endpoint +
+      '&origins=' + [origin1, origin2].join('|') +
+      '&destinations=' + destinations.join('|') +
+      '&key=' + apiKey;
+    console.log(query);
+    axios.get(proxy+query).then((response) => {
+      let firstDistances = response.data.rows[0]['elements'];
+      let secondDistances = response.data.rows[1]['elements'];
+
+      for(let i = 0; i < stateCopy.businesses.length; ++i) {
+        stateCopy.businesses[i]['distanceText'] = [
+          firstDistances[i]['distance']['text'],
+          secondDistances[i]['distance']['text']];
+
+        stateCopy.businesses[i]['distanceValue'] = [
+          firstDistances[i]['distance']['value'],
+          secondDistances[i]['distance']['value']];
+      }
+      stateCopy.businesses = stateCopy.businesses.sort((x, y) => (x.distanceValue[0]+x.distanceValue[1]) - (y.distanceValue[0] + y.distanceValue[1]))
+
+      object.setState(stateCopy);
+    }, (error) => {
+      console.log("CALLBACK ERROR");
+      console.log(error);
+      object.setState(stateCopy);
+    })
   }
 
   static findMidPoint (coor1, coor2) {

@@ -46,7 +46,8 @@ export default class ResultCard extends Component {
             <Button size="small" color="primary" href={this.props.business.url}>
               Open on Yelp
             </Button>
-            <Chip label="Total: 4 mi" />
+            <Chip label={"Total distance: " +
+            ((this.props.business.distanceValue[0] + this.props.business.distanceValue[1])*0.00062137).toFixed(2) +" mile(s)."}/>
           </CardActions>
         </Card>
       </div>
