@@ -63,20 +63,11 @@ class WebMap extends Component {
     return elems
   }
 
-  static getCenter(midpoint) {
-    // There is a midpoint
-    if (Object.keys(midpoint).length > 0)
-      return [midpoint.lat, midpoint.lng];
-    else
-      return [30.2396338, -97.728029];
-  }
-
   render() {
     return (
       <div className="webmap">
         <GoogleMap
           apiKey='AIzaSyALINww1dMSk0T_EXLNaJ3MPLDdEV02H-g'
-          // center={WebMap.getCenter(this.props.locations['midpoint'])}
           center={this.props.center}
           zoom={this.props.zoom}
           hoverDistance={20}

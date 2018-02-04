@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import Chip from 'material-ui/Chip'
 import { withStyles } from 'material-ui/styles';
 
 const styles = {
@@ -18,6 +19,7 @@ export default class ResultCard extends Component {
   constructor(props) {
     super(props)
   }
+
   render() {
 
     return (
@@ -25,24 +27,26 @@ export default class ResultCard extends Component {
         <Card >
           <CardMedia
             className={"card-media"}
-            image="/realty_austin.jpg"
-            title="Realty Austin"
+            image={this.props.business.image_url}
+            title={this.props.business.id}
           />
           <CardContent>
             <Typography type="headline" component="h2">
-              Realty Austin
+              {this.props.business.name}
             </Typography>
             <Typography component="p">
-              15211 Shapiro Springs Ln, Houston, TX 78705
+              {
+                this.props.business.location.address1 + ', ' +
+                this.props.business.location.city + ', ' +
+                this.props.business.location.state + ' ' + this.props.business.location.zip_code
+              }
             </Typography>
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="primary" href={this.props.business.url}>
               Open on Yelp
             </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
+            <Chip label="Total: 4 mi" />
           </CardActions>
         </Card>
       </div>
