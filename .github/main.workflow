@@ -4,7 +4,7 @@ workflow "Spitting out Eslint Version" {
 }
 
 action "docker:/widerin/alpine-eslint" {
-  uses = "docker://mhart/alpine-node"
+  uses = "docker://widerin/alpine-eslint"
   runs = "eslint"
   args = "--version"
 }
